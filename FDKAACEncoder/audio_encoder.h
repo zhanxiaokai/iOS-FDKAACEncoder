@@ -7,20 +7,23 @@
 #define UINT64_C(value)__CONCAT(value,ULL)
 #endif
 
-extern "C" {
-	#include "./3rdparty/ffmpeg/include/libavcodec/avcodec.h"
-	#include "./3rdparty/ffmpeg/include/libavformat/avformat.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/avutil.h"
-	#include "./3rdparty/ffmpeg/include/libswresample/swresample.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/samplefmt.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/common.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/channel_layout.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/opt.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/imgutils.h"
-	#include "./3rdparty/ffmpeg/include/libavutil/mathematics.h"
-};
+#define byte uint8_t
+#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
+#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
+#define LOGI(...)  printf("  ");printf(__VA_ARGS__); printf("\t -  <%s> \n", LOG_TAG);
 
-#include "./CommonTools.h"
+extern "C" {
+	#include "libavcodec/avcodec.h"
+	#include "libavformat/avformat.h"
+	#include "libavutil/avutil.h"
+	#include "libswresample/swresample.h"
+	#include "libavutil/samplefmt.h"
+	#include "libavutil/common.h"
+	#include "libavutil/channel_layout.h"
+	#include "libavutil/opt.h"
+	#include "libavutil/imgutils.h"
+	#include "libavutil/mathematics.h"
+};
 
 #ifndef PUBLISH_BITE_RATE
 #define PUBLISH_BITE_RATE 64000

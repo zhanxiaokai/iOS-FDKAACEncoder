@@ -228,9 +228,7 @@ void AudioEncoder::encode(byte* buffer, int size) {
 		memcpy(samples + samplesCursor, buffer + bufferCursor, cpySize);
 		bufferCursor += cpySize;
 		bufferSize -= cpySize;
-		long long beginEncodeTimeMills = getCurrentTime();
 		this->encodePacket();
-		totalEncodeTimeMills += (getCurrentTime() - beginEncodeTimeMills);
 		samplesCursor = 0;
 	}
 	if (bufferSize > 0) {
@@ -246,7 +244,6 @@ void AudioEncoder::encodePacket() {
 	av_init_packet(&pkt);
 	AVFrame* encode_frame;
 	if(swrContext) {
-		long long beginSWRTimeMills = getCurrentTime();
 		swr_convert(swrContext, convert_data, avCodecContext->frame_size,
 				(const uint8_t**)input_frame->data, avCodecContext->frame_size);
 		int length = avCodecContext->frame_size * av_get_bytes_per_sample(avCodecContext->sample_fmt);
@@ -255,7 +252,6 @@ void AudioEncoder::encodePacket() {
 				swrFrame->data[k][j] = convert_data[k][j];
 		    }
 		}
-		totalSWRTimeMills += (getCurrentTime() - beginSWRTimeMills);
 		encode_frame = swrFrame;
 	} else {
 		encode_frame = input_frame;
